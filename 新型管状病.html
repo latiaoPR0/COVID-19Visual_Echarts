@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新型管状病毒时时数据</title>
+    <script src="E:/JsProject/echarts.js"></script>
+    <script src="E:/JsProject/china.js"></script>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+        
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+        
+        #main {
+            width: 800px;
+            height: 600px;
+            margin: 150px auto;
+            border: 1px solid #ddd;
+        }
+        /*建议长宽比0.75，符合审美*/
+    </style>
+</head>
+
+<body>
+
+
+    <div id="main"></div>
+
+    <script type="text/javascript">
+        var dataList = [{
+            name: "南海诸岛",
+            value: 0
+        }, {
+            name: '北京',
+            value: 0
+        }, {
+            name: '天津',
+            value: 0
+        }, {
+            name: '上海',
+            value: 0
+        }, {
+            name: '重庆',
+            value: 0
+        }, {
+            name: '河北',
+            value: 0
+        }, {
+            name: '河南',
+            value: 0
+        }, {
+            name: '云南',
+            value: 0
+        }, {
+            name: '辽宁',
+            value: 0
+        }, {
+            name: '黑龙江',
+            value: 0
+        }, {
+            name: '湖南',
+            value: 0
+        }, {
+            name: '安徽',
+            value: 0
+        }, {
+            name: '山东',
+            value: 0
+        }, {
+            name: '新疆',
+            value: 0
+        }, {
+            name: '江苏',
+            value: 0
+        }, {
+            name: '浙江',
+            value: 0
+        }, {
+            name: '江西',
+            value: 0
+        }, {
+            name: '湖北',
+            value: 0
+        }, {
+            name: '广西',
+            value: 0
+        }, {
+            name: '甘肃',
+            value: 0
+        }, {
+            name: '山西',
+            value: 0
+        }, {
+            name: '内蒙古',
+            value: 0
+        }, {
+            name: '陕西',
+            value: 0
+        }, {
+            name: '吉林',
+            value: 0
+        }, {
+            name: '福建',
+            value: 0
+        }, {
+            name: '贵州',
+            value: 0
+        }, {
+            name: '广东',
+            value: 0
+        }, {
+            name: '青海',
+            value: 0
+        }, {
+            name: '西藏',
+            value: 0
+        }, {
+            name: '四川',
+            value: 0
+        }, {
+            name: '宁夏',
+            value: 0
+        }, {
+            name: '海南',
+            value: 0
+        }, {
+            name: '台湾',
+            value: 0
+        }, {
+            name: '香港',
+            value: 0
+        }, {
+            name: '澳门',
+            value: 0
+        }]
+        var date = ['2020年1月11日', '2020年1月12日', '2020年1月13日', '2020年1月14日', '2020年1月15日', '2020年1月16日', '2020年1月17日', '2020年1月18日', '2020年1月19日', '2020年1月20日', '2020年1月21日', '2020年1月22日', '2020年1月23日', '2020年1月24日', '2020年1月25日', '2020年1月26日', '2020年1月27日', '2020年1月28日', '2020年1月29日', '2020年1月30日', '2020年1月31日', '2020年2月1日', '2020年2月2日', '2020年2月3日', '2020年2月4日', '2020年2月5日', '2020年2月6日', '2020年2月7日'];
+        var beijing = [0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 4, 12, 10, 15, 17, 12, 11, 20, 21, 24, 27, 29, 16, 25, 21, 23, 18];
+        var hubei = [41, 0, 0, 0, 0, 4, 17, 59, 77, 72, 105, 69, 105, 180, 323, 371, 1291, 840, 1032, 1220, 1347, 1921, 2103, 2345, 3156, 2987, 2447, 2841];
+        var guangdong = [0, 0, 0, 0, 0, 0, 0, 0, 1, 13, 12, 6, 21, 25, 20, 48, 42, 53, 70, 82, 127, 84, 79, 114, 73, 74, 74, 57];
+        var shanghai = [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 7, 7, 4, 13, 7, 13, 13, 14, 21, 27, 25, 24, 16, 15, 25, 21, 15, 12];
+        var zhejiang = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 33, 19, 42, 24, 45, 123, 132, 109, 62, 62, 63, 105, 66, 59, 52, 42];
+        var tianjin = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1, 3, 2, 4, 9, 1, 3, 3, 2, 9, 7, 12, 7, 2, 10, 2];
+        var chongqin = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 18, 30, 18, 35, 22, 15, 18, 41, 32, 24, 38, 37, 29, 23, 22, 15];
+        var jiangxi = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 4, 11, 18, 12, 24, 37, 53, 77, 47, 46, 59, 85, 72, 52, 61, 37];
+        var shandong = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5, 3, 12, 18, 24, 24, 34, 24, 33, 24, 23, 21, 24, 28, 45, 36, 28];
+        var henan = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 4, 23, 51, 45, 40, 38, 72, 74, 70, 71, 73, 109, 89, 87, 63, 67];
+        var hunan = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8, 15, 19, 26, 31, 43, 78, 56, 55, 57, 74, 58, 72, 68, 50, 61, 31];
+        var sichuan = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 10, 13, 16, 25, 21, 18, 34, 35, 30, 24, 23, 28, 19, 20, 23, 19];
+        var yunnan = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 3, 6, 8, 7, 25, 19, 10, 11, 8, 10, 8, 5, 6, 7, 3];
+        var shanxi = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 5, 3, 4, 7, 7, 8, 4, 8, 9, 10, 8, 7, 9, 6, 8];
+        var fujian = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 5, 19, 27, 17, 9, 19, 19, 24, 15, 20, 15, 11, 10, 9, 15];
+        var liaoning = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 8, 5, 5, 5, 9, 5, 4, 15, 4, 6, 4, 7, 8, 5, 5];
+        var hainan = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 2, 12, 9, 7, 5, 3, 3, 8, 6, 7, 8, 11, 11, 11, 12];
+        var anhui = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 14, 24, 21, 10, 36, 46, 48, 37, 60, 43, 68, 72, 50, 61, 74, 68];
+        var guizou = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1, 1, 2, 2, 0, 3, 3, 14, 9, 8, 10, 8, 7, 6, 12];
+        var guangxi = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 11, 10, 10, 13, 5, 7, 20, 9, 13, 11, 16, 12, 11, 18, 4, 11];
+        var ningxia = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 3, 4, 1, 5, 4, 5, 2, 3, 3, 0, 6, 3, 2];
+        var hebei = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 6, 5, 5, 15, 15, 17, 17, 14, 8, 9, 13, 9, 22, 15, 24];
+        var jiangshu = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8, 9, 13, 16, 23, 29, 30, 39, 34, 34, 35, 37, 33, 32, 35, 31];
+        var jining = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 2, 2, 1, 5, 0, 3, 6, 8, 11, 12, 5, 6, 4];
+        var heilongjiang = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 6, 6, 9, 7, 6, 16, 21, 15, 23, 37, 35, 37, 36, 32];
+        var sanxi = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 10, 7, 13, 11, 10, 7, 23, 15, 15, 12, 14, 23, 8, 11, 11];
+        var xinjiang = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 5, 3, 1, 3, 1, 3, 3, 5, 3, 4, 3, 3];
+        var ganshu = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 7, 5, 5, 2, 3, 6, 5, 11, 4, 2, 5, 5, 4];
+        var neimenggu = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 5, 4, 2, 2, 3, 2, 3, 4, 7, 1, 7, 4, 4, 2];
+        var qinhai = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 2, 0, 0, 2, 1, 0, 4, 2, 2, 1, 0, 0];
+        var xizang = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
+
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // function randomValue() {
+        //     return Math.round(Math.random() * 1000);
+        // }
+        option = {
+            title: {
+                top: '2%',
+                text: '2019新型冠状病毒中国大陆病例',
+                subtext: '2020年1月11日-2020年2月7日',
+                left: 'center'
+            },
+            tooltip: {
+                formatter: function(params, ticket, callback) {
+                        return params.seriesName + '<br />' + params.name + '：' + params.value
+                    } //数据格式化
+            },
+            visualMap: {
+                min: 0,
+                max: 1500,
+                left: 'left',
+                top: 'bottom',
+                text: ['高', '低'], //取值范围的文字
+                inRange: {
+                    color: ['#FFFFFF', '#EBA35B', '#FF8F5C', '#EB2E10', '#FF002C'], //取值范围的颜色
+                },
+                show: true //图注
+            },
+            geo: {
+                map: 'china',
+                roam: false, //不开启缩放和平移
+                zoom: 1.23, //视角缩放比例
+                label: {
+                    normal: {
+                        show: true,
+                        fontSize: '10',
+                        color: 'rgba(0,0,0,0.7)'
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        borderColor: 'rgba(0, 0, 0, 0.2)'
+                    },
+                    emphasis: {
+                        areaColor: '#F3B329', //鼠标选择区域颜色
+                        shadowOffsetX: 0,
+                        shadowOffsetY: 0,
+                        shadowBlur: 20,
+                        borderWidth: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            },
+            series: [{
+                name: '信息量',
+                type: 'map',
+                geoIndex: 0,
+                data: dataList
+            }]
+        };
+
+        var bjsum = 0;
+        var tjsum = 0;
+        var shsum = 0;
+        var cqsum = 0;
+        var hebeisum = 0;
+        var henansum = 0;
+        var yunansum = 0;
+        var liaoningsum = 0
+        var heilongjiangsum = 0
+        var hunansum = 0;
+        var anhuisum = 0;
+        var sandongsum = 0;
+        var xijiangsum = 0;
+        var jiangshusum = 0;
+        var zhejiangsum = 0;
+        var jiangxisum = 0;
+        var hbsum = 0;
+        var guangxisum = 0;
+        var ganshusum = 0;
+        var shanxisum = 0;
+        var neimenggusum = 0;
+        var sanxisum = 0;
+        var jiningsum = 0;
+        var fujiansum = 0;
+        var guizousum = 0;
+        var guangdongsum = 0;
+        var qinhaisum = 0;
+        var xizangsum = 0;
+        var sichuansum = 0;
+        var ningxiasum = 0;
+        var hainansum = 0;
+        var xizangsum = 0;
+
+
+        var list1 = []; //北京
+        var list3 = []; //天津
+        var list4 = []; //上海
+        var list5 = []; //重庆
+        var list6 = []; //河北
+        var list7 = []; //河南
+        var list8 = []; //云南
+        var list9 = []; //辽宁
+        var list10 = []; //黑龙江
+        var list11 = []; //湖南
+        var list12 = []; //安徽
+        var list13 = []; //山东
+        var list14 = []; //新疆
+        var list15 = []; //江苏
+        var list16 = []; //浙江
+        var list17 = []; //江西
+        var list18 = []; //湖北
+        var list19 = []; //广西
+        var list20 = []; //甘肃
+        var list21 = []; //山西
+        var list22 = []; //内蒙古
+        var list23 = []; //陕西
+        var list24 = []; //吉林
+        var list25 = []; //福建
+        var list26 = []; //贵州
+        var list27 = []; //广东
+        var list28 = []; //青海
+        var list29 = []; //西藏
+        var list30 = []; //四川
+        var list31 = []; //宁夏
+        var list32 = []; //海南
+
+
+        var ccc = 0;
+
+        var bjcc = 0;
+        for (var i = 0; i < date.length; i++) {
+            bjsum += parseInt(beijing[i]);
+            hbsum += parseInt(hubei[i]);
+            tjsum += parseInt(tianjin[i]);
+            shsum += parseInt(shanghai[i]);
+            cqsum += parseInt(chongqin[i]);
+            hebeisum += parseInt(hebei[i]);
+            henansum += parseInt(henan[i]);
+            yunansum += parseInt(yunnan[i]);
+            xijiangsum += parseInt(xinjiang[i]); //新疆
+            liaoningsum += parseInt(liaoning[i]);
+            heilongjiangsum += parseInt(heilongjiang[i]);
+            cqsum += parseInt(chongqin[i]);
+            hebeisum += parseInt(hebei[i]);
+            henansum += parseInt(henan[i]);
+            hunansum += parseInt(hunan[i]);
+            anhuisum += parseInt(anhui[i]);
+            sandongsum += parseInt(shandong[i]);
+            hebeisum += parseInt(hebei[i]);
+            henansum += parseInt(henan[i]);
+            hunansum += parseInt(hunan[i]);
+            anhuisum += parseInt(anhui[i]);
+            jiangshusum += parseInt(jiangshu[i]);
+            zhejiangsum += parseInt(zhejiang[i]);
+            jiangxisum += parseInt(jiangxi[i]);
+            anhuisum += parseInt(anhui[i]);
+            guangxisum += parseInt(guangxi[i]);
+            ganshusum += parseInt(ganshu[i]);
+            sanxisum += parseInt(sanxi[i]);
+            neimenggusum += parseInt(neimenggu[i]);
+            shanxisum += parseInt(shanxi[i]);
+            jiningsum += parseInt(jining[i]);
+            fujiansum += parseInt(fujian[i]);
+            guizousum += parseInt(guizou[i]);
+            guangdongsum += parseInt(guangdong[i]);
+            qinhaisum += parseInt(qinhai[i]);
+            xizangsum += parseInt(xizang[i]);
+            sichuansum += parseInt(sichuan[i]);
+            ningxiasum += parseInt(ningxia[i]);
+            hainansum += parseInt(hainan[i]);
+
+
+
+            list1[i] = bjsum;
+            list3[i] = tjsum;
+            list4[i] = shsum;
+            list5[i] = cqsum;
+            list6[i] = hebeisum;
+            list7[i] = henansum;
+            list8[i] = yunansum;
+            list9[i] = liaoningsum;
+            list10[i] = heilongjiangsum;
+            list11[i] = hunansum;
+            list12[i] = anhuisum;
+            list13[i] = sandongsum;
+            list14[i] = xijiangsum;
+            list15[i] = jiangshusum;
+            list16[i] = zhejiangsum;
+            list17[i] = jiangxisum;
+            list18[i] = hbsum; // hubei
+            list19[i] = guangxisum;
+            list20[i] = ganshusum;
+            list21[i] = shanxisum;
+            list22[i] = neimenggusum;
+            list23[i] = sanxisum;
+            list24[i] = jiningsum;
+            list25[i] = fujiansum;
+            list26[i] = guizousum;
+            list27[i] = guangdongsum;
+            list28[i] = qinhaisum
+            list29[i] = xizangsum;
+            list30[i] = sichuansum;
+            list31[i] = ningxiasum;
+            list32[i] = hainansum;
+
+        }
+        console.log("--------------")
+        console.log(list1);
+        var dataList2 = [{
+            name: "南海诸岛",
+            value: 0
+        }, {
+            name: '北京',
+            value: 0
+        }, {
+            name: '天津',
+            value: 0
+        }, {
+            name: '上海',
+            value: 0
+        }, {
+            name: '重庆',
+            value: 0
+        }, {
+            name: '河北',
+            value: 0
+        }, {
+            name: '河南',
+            value: 0
+        }, {
+            name: '云南',
+            value: 0
+        }, {
+            name: '辽宁',
+            value: 0
+        }, {
+            name: '黑龙江',
+            value: 0
+        }, {
+            name: '湖南',
+            value: 0
+        }, {
+            name: '安徽',
+            value: 0
+        }, {
+            name: '山东',
+            value: 0
+        }, {
+            name: '新疆',
+            value: 0
+        }, {
+            name: '江苏',
+            value: 0
+        }, {
+            name: '浙江',
+            value: 0
+        }, {
+            name: '江西',
+            value: 0
+        }, {
+            name: '湖北',
+            value: 0
+        }, {
+            name: '广西',
+            value: 0
+        }, {
+            name: '甘肃',
+            value: 0
+        }, {
+            name: '山西',
+            value: 0
+        }, {
+            name: '内蒙古',
+            value: 0
+        }, {
+            name: '陕西',
+            value: 0
+        }, {
+            name: '吉林',
+            value: 0
+        }, {
+            name: '福建',
+            value: 0
+        }, {
+            name: '贵州',
+            value: 0
+        }, {
+            name: '广东',
+            value: 0
+        }, {
+            name: '青海',
+            value: 0
+        }, {
+            name: '西藏',
+            value: 0
+        }, {
+            name: '四川',
+            value: 0
+        }, {
+            name: '宁夏',
+            value: 0
+        }, {
+            name: '海南',
+            value: 0
+        }, {
+            name: '台湾',
+            value: 0
+        }, {
+            name: '香港',
+            value: 0
+        }, {
+            name: '澳门',
+            value: 0
+        }]
+        var timer = setInterval(function() {
+            dataList2[1].value = list1[ccc];
+            dataList2[2].value = list3[ccc];
+            dataList2[3].value = list4[ccc];
+            dataList2[4].value = list5[ccc];
+            dataList2[5].value = list6[ccc];
+            dataList2[6].value = list7[ccc];
+            dataList2[7].value = list8[ccc]; //34
+            dataList2[8].value = list9[ccc];
+            dataList2[9].value = list10[ccc]
+            dataList2[10].value = list11[ccc];
+            dataList2[11].value = list12[ccc];
+            dataList2[12].value = list13[ccc];
+            dataList2[13].value = list14[ccc];
+            dataList2[14].value = list15[ccc];
+            dataList2[15].value = list16[ccc];
+            dataList2[16].value = list17[ccc];
+            dataList2[17].value = list18[ccc];
+            dataList2[18].value = list19[ccc];
+            dataList2[19].value = list20[ccc];
+            dataList2[20].value = list21[ccc];
+            dataList2[21].value = list22[ccc];
+            dataList2[22].value = list23[ccc];
+            dataList2[23].value = list24[ccc];
+            dataList2[24].value = list25[ccc];
+            dataList2[25].value = list26[ccc];
+            dataList2[26].value = list27[ccc];
+            dataList2[27].value = list28[ccc];
+            dataList2[28].value = list29[ccc];
+            dataList2[29].value = list30[ccc];
+            dataList2[30].value = list31[ccc];
+            dataList2[31].value = list32[ccc];
+            // dataList2[32].value = list33[ccc];
+
+            console.log(dataList2[ccc].value);
+            ccc++;
+            if (ccc >= list1.length) {
+                clearInterval(timer)
+            }
+
+
+            myChart.setOption({
+                series: [{
+                    name: '信息量',
+                    type: 'map',
+                    geoIndex: 0,
+                    data: dataList2
+                }]
+            })
+        }, 1000)
+
+
+
+
+        /*  setTimeout(function () {
+              myChart.setOption({
+                  series : [
+                      {
+                          name: '信息量',
+                          type: 'map',
+                          geoIndex: 0,
+                          data:dataList
+                      }
+                  ]
+              });
+          },1000)*/
+
+        myChart.setOption(option);
+        myChart.on('click', function(params) {
+            alert(params.name);
+        });
+    </script>
+</body>
+
+</html>
